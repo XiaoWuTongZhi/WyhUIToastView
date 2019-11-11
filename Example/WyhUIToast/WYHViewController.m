@@ -7,6 +7,7 @@
 //
 
 #import "WYHViewController.h"
+#import <WyhUIToast.h>
 
 @interface WYHViewController ()
 
@@ -25,5 +26,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (IBAction)clickAct:(id)sender {
+    [WyhUIToast showInfoMessage:@"test asdasdas"];
+}
+
+
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4AA40BC2D9B3B4A5FFAFBBA0 /* libPods-WyhUIToast_Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9F1CB4B598F6774F247175 /* libPods-WyhUIToast_Tests.a */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -21,9 +22,8 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
-		79983F527ACE9A625A837D24 /* Pods_WyhUIToast_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8048447051E0D13C523719FC /* Pods_WyhUIToast_Example.framework */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
-		C11714EDF55968A2E4998F5E /* Pods_WyhUIToast_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7E1FAF0002A4823F53747 /* Pods_WyhUIToast_Tests.framework */; };
+		C97B7FFACC2137CA5D1CEBE7 /* libPods-WyhUIToast_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A94F87A378AD9DABAC27C9AA /* libPods-WyhUIToast_Example.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,9 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		34AC59CD335DC0F8885D68FB /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		2C9F1CB4B598F6774F247175 /* libPods-WyhUIToast_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WyhUIToast_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		34AC59CD335DC0F8885D68FB /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		474D12BE5EE51F57BC537CA7 /* Pods-WyhUIToast_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WyhUIToast_Tests.release.xcconfig"; path = "Target Support Files/Pods-WyhUIToast_Tests/Pods-WyhUIToast_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		5C5275FD4FA98BF9F5AB152A /* WyhUIToast.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = WyhUIToast.podspec; path = ../WyhUIToast.podspec; sourceTree = "<group>"; };
+		5C5275FD4FA98BF9F5AB152A /* WyhUIToast.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = WyhUIToast.podspec; path = ../WyhUIToast.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6003F58A195388D20070C39A /* WyhUIToast_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WyhUIToast_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -62,11 +63,10 @@
 		700F6A766C307E52F37B1266 /* Pods-WyhUIToast_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WyhUIToast_Tests.debug.xcconfig"; path = "Target Support Files/Pods-WyhUIToast_Tests/Pods-WyhUIToast_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		70841D5FD29E6573169CBFFE /* Pods-WyhUIToast_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WyhUIToast_Example.debug.xcconfig"; path = "Target Support Files/Pods-WyhUIToast_Example/Pods-WyhUIToast_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8048447051E0D13C523719FC /* Pods_WyhUIToast_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WyhUIToast_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		98C7E1FAF0002A4823F53747 /* Pods_WyhUIToast_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WyhUIToast_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ED3D07058C539B87F6BC457 /* Pods-WyhUIToast_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WyhUIToast_Example.release.xcconfig"; path = "Target Support Files/Pods-WyhUIToast_Example/Pods-WyhUIToast_Example.release.xcconfig"; sourceTree = "<group>"; };
-		D76B59752EFC1A4A9732AED7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		A94F87A378AD9DABAC27C9AA /* libPods-WyhUIToast_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WyhUIToast_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D76B59752EFC1A4A9732AED7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +77,7 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				79983F527ACE9A625A837D24 /* Pods_WyhUIToast_Example.framework in Frameworks */,
+				C97B7FFACC2137CA5D1CEBE7 /* libPods-WyhUIToast_Example.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,7 +88,7 @@
 				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				C11714EDF55968A2E4998F5E /* Pods_WyhUIToast_Tests.framework in Frameworks */,
+				4AA40BC2D9B3B4A5FFAFBBA0 /* libPods-WyhUIToast_Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,8 +123,8 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				8048447051E0D13C523719FC /* Pods_WyhUIToast_Example.framework */,
-				98C7E1FAF0002A4823F53747 /* Pods_WyhUIToast_Tests.framework */,
+				A94F87A378AD9DABAC27C9AA /* libPods-WyhUIToast_Example.a */,
+				2C9F1CB4B598F6774F247175 /* libPods-WyhUIToast_Tests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -193,7 +193,6 @@
 				700F6A766C307E52F37B1266 /* Pods-WyhUIToast_Tests.debug.xcconfig */,
 				474D12BE5EE51F57BC537CA7 /* Pods-WyhUIToast_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -208,7 +207,7 @@
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
-				A8418656D4DCD6B8FCE9C9E5 /* [CP] Embed Pods Frameworks */,
+				956BCB498EA11B17DD59EB54 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -258,6 +257,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -317,22 +317,22 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A8418656D4DCD6B8FCE9C9E5 /* [CP] Embed Pods Frameworks */ = {
+		956BCB498EA11B17DD59EB54 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WyhUIToast_Example/Pods-WyhUIToast_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/WyhUIToast/WyhUIToast.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-WyhUIToast_Example/Pods-WyhUIToast_Example-resources.sh",
+				"${PODS_ROOT}/../../WyhUIToast/Assets/WyhToastBox.bundle",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WyhUIToast.framework",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/WyhToastBox.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WyhUIToast_Example/Pods-WyhUIToast_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WyhUIToast_Example/Pods-WyhUIToast_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E3F2E168896C6530752A6FE4 /* [CP] Check Pods Manifest.lock */ = {

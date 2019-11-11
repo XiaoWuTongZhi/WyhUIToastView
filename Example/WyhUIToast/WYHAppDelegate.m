@@ -7,12 +7,15 @@
 //
 
 #import "WYHAppDelegate.h"
+#import <WyhUIToast.h>
 
 @implementation WYHAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [WyhUIToast.service initialize];
+    
+    
     return YES;
 }
 

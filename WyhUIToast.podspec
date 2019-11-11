@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WyhUIToast'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of WyhUIToast.'
+  s.version          = '1.0.1'
+  s.summary          = 'easy to show toast view used by WyhUIToast !'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -21,22 +21,24 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/Michael Wu/WyhUIToast'
+  s.homepage         = 'https://github.com/XiaoWuTongZhi/WyhUIToastView'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Michael Wu' => 'yueheng.wu@net263.com' }
-  s.source           = { :git => 'https://github.com/Michael Wu/WyhUIToast.git', :tag => s.version.to_s }
+  s.author           = { 'wyh' => '609223770@qq.com' }
+  s.source           = { :git => 'https://github.com/XiaoWuTongZhi/WyhUIToastView.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'WyhUIToast/Classes/**/*'
+  s.resource = 'WyhUIToast/Assets/*.bundle'
   
-  # s.resource_bundles = {
-  #   'WyhUIToast' => ['WyhUIToast/Assets/*.png']
-  # }
+  
+#  s.resource_bundles = {
+#    'WyhUIToast' => 'WyhUIToast/Assets/WyhToastBox.bundle'
+#  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'Masonry'
 end

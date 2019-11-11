@@ -1,0 +1,23 @@
+PODS:
+  - Masonry (1.1.0)
+  - WyhUIToast (0.1.0):
+    - Masonry
+
+DEPENDENCIES:
+  - WyhUIToast (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Masonry
+
+EXTERNAL SOURCES:
+  WyhUIToast:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  WyhUIToast: 861ede06543b9f7876ec8308665f01ea97319954
+
+PODFILE CHECKSUM: 97d2b494ca5c040b1be464da16e9bc9b5bcacf62
+
+COCOAPODS: 1.8.4

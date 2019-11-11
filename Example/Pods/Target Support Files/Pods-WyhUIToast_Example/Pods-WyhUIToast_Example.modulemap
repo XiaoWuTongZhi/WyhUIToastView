@@ -1,0 +1,6 @@
+framework module Pods_WyhUIToast_Example {
+  umbrella header "Pods-WyhUIToast_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "WyhUIToast",
+  "version": "0.1.0",
+  "summary": "A short description of WyhUIToast.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Michael Wu/WyhUIToast",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Michael Wu": "yueheng.wu@net263.com"
+  },
+  "source": {
+    "git": "https://github.com/Michael Wu/WyhUIToast.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "WyhUIToast/Classes/**/*",
+  "resources": "WyhUIToast/Assets/*.bundle",
+  "dependencies": {
+    "Masonry": [
+
+    ]
+  }
+}

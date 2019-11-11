@@ -1,0 +1,6 @@
+framework module WyhUIToast {
+  umbrella header "WyhUIToast-umbrella.h"
+
+  export *
+  module * { export * }
+}
