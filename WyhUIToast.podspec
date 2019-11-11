@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WyhUIToast'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'easy to show toast view used by WyhUIToast !'
 
 # This description is used to generate tags and improve search results.
@@ -31,7 +31,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'WyhUIToast/Classes/**/*'
-  s.resource = 'WyhUIToast/Assets/*.bundle'
+  s.resources = 'WyhUIToast/Assets/WyhToastBox.bundle'
   
   
 #  s.resource_bundles = {
