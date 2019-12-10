@@ -8,6 +8,7 @@
 
 #import "WyhBottomToastView.h"
 #import "NSBundle+WyhUIToast.h"
+#import "WyhUIToastStyle.h"
 
 #import <Masonry/Masonry.h>
 
@@ -23,6 +24,8 @@ static CGFloat kBottomBaseOnOffsetY;
 
 @interface WyhBottomToastView ()
 
+@property (nonatomic, strong) WyhUIToastStyle *style;
+
 @property (nonatomic, weak) id<WyhBottomToastViewDelegate> delegate;
 
 @property (nonatomic, assign) BOOL isAlreadyShow;
@@ -34,10 +37,14 @@ static CGFloat kBottomBaseOnOffsetY;
 @property (nonatomic, assign) WyhBottomToastViewDismissMode dismissMode;
 @property (nonatomic, assign) NSTimeInterval dismissDuration;
 
+@property (nonatomic, strong) UIView *windowBlackCoverView;
+@property (nonatomic, strong) UIActivityIndicatorView *loadingIndicator;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) UIImageView *tipImageView;
 @property (nonatomic, strong) UILabel *tipLabel;
 @property (nonatomic, strong) UIView *alphaBackgroundView;
+@property (nonatomic, strong) UIImageView *accessoryView;
+
 
 @property (nonatomic, strong) UITapGestureRecognizer *actionTapGestrueRecognizer;
 
@@ -69,6 +76,7 @@ static CGFloat kBottomBaseOnOffsetY;
 #pragma mark - API
 
 - (instancetype)initWithMessage:(NSString *)msg
+                          style:(WyhUIToastStyle *)style
                            type:(WyhBottomToastViewType)type
                   accessoryType:(WyhBottomToastViewAccessoryType)accessoryType
                     dismissMode:(WyhBottomToastViewDismissMode)dismissMode
@@ -76,6 +84,7 @@ static CGFloat kBottomBaseOnOffsetY;
                        delegate:(id<WyhBottomToastViewDelegate>)delegate {
     
     if (self = [super init]) {
+        _style = style;
         _delegate = delegate;
         _message = msg;
         _type = type;
@@ -91,6 +100,7 @@ static CGFloat kBottomBaseOnOffsetY;
 }
 
 + (instancetype)showToastWithMessage:(NSString *)msg
+                               style:(WyhUIToastStyle *)style
                                 type:(WyhBottomToastViewType)type
                        accessoryType:(WyhBottomToastViewAccessoryType)accessoryType
                          dismissMode:(WyhBottomToastViewDismissMode)dismissMode
@@ -98,13 +108,68 @@ static CGFloat kBottomBaseOnOffsetY;
                             delegate:(id<WyhBottomToastViewDelegate>)delegate {
     
     WyhBottomToastView *Toast = [[WyhBottomToastView alloc] initWithMessage:msg
-                                                                     type:type
-                                                            accessoryType:accessoryType
-                                                              dismissMode:dismissMode
-                                                                 duration:duration
-                                                                 delegate:delegate];
+                                                                      style:style
+                                                                       type:type
+                                                              accessoryType:accessoryType
+                                                                dismissMode:dismissMode
+                                                                   duration:duration
+                                                                   delegate:delegate];
     [Toast show];
     return Toast;
+}
+
+- (void)updateStatusWithMessage:(NSString *)msg
+                           type:(WyhBottomToastViewType)type
+                  accessoryType:(WyhBottomToastViewAccessoryType)accessoryType
+                    dismissMode:(WyhBottomToastViewDismissMode)dismissMode
+                       duration:(NSTimeInterval)duration {
+    
+    if (!self.isAlreadyShow) {
+        return;
+    }
+    
+    _tipLabel.text = msg;
+    
+    // icon
+    if (type == WyhBottomToastViewTypeLoading) {
+        [_loadingIndicator startAnimating];
+        _tipImageView.hidden = YES;
+    }else {
+        [_loadingIndicator stopAnimating];
+        _tipImageView.image = [self private_getImageFromType:type];
+        
+        // zoomin if last type is loading
+        if (_type == WyhBottomToastViewTypeLoading) {
+            
+            _tipImageView.transform = CGAffineTransformIdentity;
+            [UIView animateWithDuration:0.2 animations:^{
+                self.tipImageView.transform = CGAffineTransformMakeScale(1.2f, 1.2f);
+                self.tipImageView.transform = CGAffineTransformIdentity;
+            }];
+        }
+    }
+    
+    // accessory
+    _accessoryView.hidden = (accessoryType == WyhBottomToastViewAccessoryTypeActionable) ? NO : YES;
+    [_tipLabel  mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_contentView.mas_top).offset(15);
+        make.left.equalTo(_tipImageView.mas_right).offset(12);
+        if (!_accessoryView.hidden) {
+            make.right.equalTo(_accessoryView.mas_left).offset(-15);
+        }else {
+            make.right.equalTo(_contentView.mas_right).offset(-20);
+        }
+    }];
+    
+    // dismiss
+    if (dismissMode == WyhBottomToastViewDismissModeNerver) {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    }else {
+        [self performSelector:@selector(dismiss) withObject:nil afterDelay:kDefaultDismissDuration];
+    }
+    
+    [self autoFitToastViewBounds];
+    
 }
 
 #pragma mark - Method
@@ -120,6 +185,13 @@ static CGFloat kBottomBaseOnOffsetY;
     
     // show in main thread
     [self performInMainThread:^{
+        
+        if (self.type == WyhBottomToastViewTypeLoading) {
+            [self.loadingIndicator startAnimating];
+        }else {
+            [self.loadingIndicator stopAnimating];
+        }
+        
         // will show call back
         if ([self.delegate respondsToSelector:@selector(bottomToastViewWillShow:)]) {
             [self.delegate bottomToastViewWillShow:self];
@@ -224,6 +296,36 @@ static CGFloat kBottomBaseOnOffsetY;
     }
 }
 
+- (UIImage *)private_getImageFromType:(WyhBottomToastViewType)type {
+    UIImage *image ;
+    switch (type) {
+        case WyhBottomToastViewTypeUnknown:
+        case WyhBottomToastViewTypeLoading:
+        {
+            return nil;
+        }
+            break;
+        case WyhBottomToastViewTypeWarning:
+        {
+            image = _style.warningImage ? : [NSBundle wyhGetImageFromBundleWithImageName:@"img_flag_warning"];
+        }
+            break;
+        case WyhBottomToastViewTypeInformation:
+        {
+            image = _style.infoImage ? : [NSBundle wyhGetImageFromBundleWithImageName:@"img_flag_info"];
+        }
+            break;
+        case WyhBottomToastViewTypeSuccess:
+        {
+            image = _style.successImage ? : [NSBundle wyhGetImageFromBundleWithImageName:@"img_flag_success"];
+        }
+            break;
+        default:
+            break;
+    }
+    return image;
+}
+
 #pragma mark - UI
 
 - (void)reconfigUI {
@@ -239,7 +341,7 @@ static CGFloat kBottomBaseOnOffsetY;
     
     _alphaBackgroundView = ({
         UIView *alpha = [[UIView alloc]init];
-        alpha.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
+        alpha.backgroundColor = [_style.toastBackgroundColor colorWithAlphaComponent:_style.toastBackgroundAlpha];        
         [self addSubview:alpha];
         [alpha mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
@@ -258,23 +360,10 @@ static CGFloat kBottomBaseOnOffsetY;
     
     _tipImageView = ({
         UIImageView *imageView = [[UIImageView alloc]init];
-        switch (_type) {
-            case WyhBottomToastViewTypeUnknown:
-            {
-                @throw [NSException exceptionWithName:@"HSBottomToastView Exception" reason:@"type can't be unknown, check code please !" userInfo:nil];
-            }
-                break;
-            case WyhBottomToastViewTypeWarning:
-            {
-                imageView.image = [NSBundle wyhGetImageFromBundleWithImageName:@"img_flag_warn"];
-            }
-                break;
-            case WyhBottomToastViewTypeInformation:
-            {
-                imageView.image = [NSBundle wyhGetImageFromBundleWithImageName:@"img_flag_info"];
-            }
-            default:
-                break;
+        if (_type == WyhBottomToastViewTypeLoading) {
+            imageView.hidden = YES;
+        }else {
+            imageView.image = [self private_getImageFromType:_type];
         }
         [_contentView addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -285,36 +374,38 @@ static CGFloat kBottomBaseOnOffsetY;
         imageView;
     });
     
-    UIView *accessoryView = nil;
+    _loadingIndicator = ({
+        UIActivityIndicatorView *hud = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyleWhite)];
+        hud.hidesWhenStopped = YES;
+        [_contentView addSubview:hud];
+        [hud mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(_tipImageView.mas_centerX);
+            make.centerY.equalTo(_tipImageView.mas_centerY);
+        }];
+        hud;
+    });
     
-    switch (_accessoryType) {
-        case WyhBottomToastViewAccessoryTypeNone:
-        {
-            
+    _accessoryView = ({
+        
+        UIImageView *imageView = [[UIImageView alloc]init];
+        imageView.image = [NSBundle wyhGetImageFromBundleWithImageName:@"img_action_arrow"];
+        [_contentView addSubview:imageView];
+        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(_contentView.mas_right).offset(-15);
+            make.centerY.equalTo(_contentView.mas_centerY);
+            make.size.mas_equalTo(CGSizeMake(kSizeBasedOnIPhone6(10), kSizeBasedOnIPhone6(16)));
+        }];
+        if (_accessoryType == WyhBottomToastViewAccessoryTypeActionable) {
+            imageView.hidden = NO;
+        }else {
+            imageView.hidden = YES;
         }
-            break;
-        case WyhBottomToastViewAccessoryTypeActionable:
-        {
-            accessoryView = ({
-                UIImageView *imageView = [[UIImageView alloc]init];
-                imageView.image = [NSBundle wyhGetImageFromBundleWithImageName:@"img_action_arrow"];
-                [_contentView addSubview:imageView];
-                [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.right.equalTo(_contentView.mas_right).offset(-15);
-                    make.centerY.equalTo(_contentView.mas_centerY);
-                    make.size.mas_equalTo(CGSizeMake(kSizeBasedOnIPhone6(10), kSizeBasedOnIPhone6(16)));
-                }];
-                imageView;
-            });
-            
-            // add tap gesture
-            _actionTapGestrueRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapToastAction:)];
-            [self addGestureRecognizer:_actionTapGestrueRecognizer];
-        }
-            break;
-        default:
-            break;
-    }
+        // add tap gesture
+        _actionTapGestrueRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapToastAction:)];
+        [self addGestureRecognizer:_actionTapGestrueRecognizer];
+        
+        imageView;
+    });
     
     _tipLabel = ({
         UILabel *label = [[UILabel alloc]init];
@@ -326,8 +417,8 @@ static CGFloat kBottomBaseOnOffsetY;
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_contentView.mas_top).offset(15);
             make.left.equalTo(_tipImageView.mas_right).offset(12);
-            if (accessoryView != nil) {
-                make.right.equalTo(accessoryView.mas_left).offset(-15);
+            if (!_accessoryView.hidden) {
+                make.right.equalTo(_accessoryView.mas_left).offset(-15);
             }else {
                 make.right.equalTo(_contentView.mas_right).offset(-20);
             }          

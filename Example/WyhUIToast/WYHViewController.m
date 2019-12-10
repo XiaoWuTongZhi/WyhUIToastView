@@ -26,10 +26,25 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-- (IBAction)clickAct:(id)sender {
-    [WyhUIToast showInfoMessage:@"test asdasdas"];
+- (IBAction)clickShowLoading:(id)sender {
+    [WyhUIToast show:(WyhUIToastTypeLoading) message:@"loading text, please wait .."];
 }
+- (IBAction)clickShowLoadingWithoutUserInteraction:(id)sender {
+    [WyhUIToast show:(WyhUIToastTypeLoading) message:@"loading text without interaction, please wait .."];
+}
+
+- (IBAction)clickShowInfo:(id)sender {
+    [WyhUIToast show:(WyhUIToastTypeInfo) message:@"Show information toast !"];
+}
+- (IBAction)clickShowWarning:(id)sender {
+    [WyhUIToast show:(WyhUIToastTypeWarn) message:@"Show warning toast !"];
+    
+}
+- (IBAction)clickShowSuccess:(id)sender {
+    [WyhUIToast show:(WyhUIToastTypeSuccess) message:@"Show success toast !"];
+}
+
+
 
 
 

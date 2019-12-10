@@ -10,7 +10,7 @@
 
 extern NSTimeInterval const kDefaultDismissDuration;
 
-@class WyhBottomToastView;
+@class WyhBottomToastView, WyhUIToastStyle;
 
 @protocol WyhBottomToastViewDelegate <NSObject>
 
@@ -26,9 +26,10 @@ extern NSTimeInterval const kDefaultDismissDuration;
 
 typedef NS_ENUM(NSUInteger, WyhBottomToastViewType) {
     WyhBottomToastViewTypeUnknown,
-    WyhBottomToastViewTypeWarning,
     WyhBottomToastViewTypeInformation,
-
+    WyhBottomToastViewTypeWarning,
+    WyhBottomToastViewTypeSuccess,
+    WyhBottomToastViewTypeLoading,
 };
 
 typedef NS_ENUM(NSUInteger, WyhBottomToastViewAccessoryType) {
@@ -60,6 +61,7 @@ typedef NS_ENUM(NSUInteger, WyhBottomToastViewDismissMode) {
 @property (nonatomic, assign, readonly) BOOL isAnimating;
 
 - (instancetype)initWithMessage:(NSString *)msg
+                          style:(WyhUIToastStyle *)style
                            type:(WyhBottomToastViewType)type
                   accessoryType:(WyhBottomToastViewAccessoryType)accessoryType
                     dismissMode:(WyhBottomToastViewDismissMode)dismissMode
@@ -67,11 +69,18 @@ typedef NS_ENUM(NSUInteger, WyhBottomToastViewDismissMode) {
                        delegate:(id<WyhBottomToastViewDelegate>)delegate;
 
 + (instancetype)showToastWithMessage:(NSString *)msg
+                               style:(WyhUIToastStyle *)style
                                 type:(WyhBottomToastViewType)type
                        accessoryType:(WyhBottomToastViewAccessoryType)accessoryType
                          dismissMode:(WyhBottomToastViewDismissMode)dismissMode
                             duration:(NSTimeInterval)duration
                             delegate:(id<WyhBottomToastViewDelegate>)delegate;
+ 
+- (void)updateStatusWithMessage:(NSString *)msg
+                           type:(WyhBottomToastViewType)type
+                  accessoryType:(WyhBottomToastViewAccessoryType)accessoryType
+                    dismissMode:(WyhBottomToastViewDismissMode)dismissMode
+                       duration:(NSTimeInterval)duration;
 
 - (void)show;
 - (void)dismiss;

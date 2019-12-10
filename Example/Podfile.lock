@@ -1,6 +1,8 @@
 PODS:
+  - IQKeyboardManager (6.5.3)
   - Masonry (1.1.0)
-  - WyhUIToast (1.0.1):
+  - WyhUIToast (1.0.2):
+    - IQKeyboardManager
     - Masonry
 
 DEPENDENCIES:
@@ -8,6 +10,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - IQKeyboardManager
     - Masonry
 
 EXTERNAL SOURCES:
@@ -15,8 +18,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
+  IQKeyboardManager: c2f901164d56807a35788483584d09fa69192e8e
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  WyhUIToast: 7d795621cdd6b02a65acecc5e5428fa83bd83de6
+  WyhUIToast: c3a64b47ddd3c16dc7c52a1f2c5987f68b29211d
 
 PODFILE CHECKSUM: 97d2b494ca5c040b1be464da16e9bc9b5bcacf62
 

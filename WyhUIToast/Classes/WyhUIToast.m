@@ -8,6 +8,7 @@
 
 #import "WyhUIToast.h"
 #import "WyhBottomToastView.h"
+#import <IQKeyboardManager.h>
 
 @interface WyhUIToast () <WyhBottomToastViewDelegate>
 
@@ -15,8 +16,9 @@
 
 @property (nonatomic, strong) NSMutableArray<WyhBottomToastView *> *toastStacks;
 
-@property (nonatomic, strong) UIView *textFieldOrView;
+@property (nonatomic, strong) WyhUIToastStyle *defaultStyle;
 
+@property (nonatomic, strong) WyhBottomToastView *currentAppearedToastView;
 
 @end
 
@@ -37,11 +39,12 @@
 }
 
 - (instancetype)initialize {
+    
     _toastStacks = [[NSMutableArray alloc]initWithCapacity:5];
     _mapBlockTable = [NSMapTable weakToStrongObjectsMapTable];
     
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(textFieldViewDidBeginEditing:) name:UITextFieldTextDidBeginEditingNotification object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(textFieldViewDidEndEditing:) name:UITextFieldTextDidEndEditingNotification object:nil];
+    _defaultStyle = [[WyhUIToastStyle alloc]init];
+    
     return self;
 }
 
@@ -53,114 +56,46 @@
 
 #pragma mark - Api
 
-+ (void)showToastMessage:(NSString *)msg {
-    [self showInfoMessage:msg];
++ (void)setDefaultStyle:(WyhUIToastStyle *)style {
+    WyhUIToast.service.defaultStyle = style;
 }
 
-+ (void)showToastMessage:(NSString *)msg duration:(NSTimeInterval)duration {
-    [self showInfoMessage:msg duration:duration];
-}
-
-#pragma mark -
-
-+ (WyhBottomToastView *)showNerverDismissInfoMessage:(NSString *)msg {
-    return [[WyhUIToast service] showToastMessage:msg
-                                                   type:(WyhBottomToastViewTypeInformation)
-                                          accessoryType:(WyhBottomToastViewAccessoryTypeNone)
-                                            dismissMode:(WyhBottomToastViewDismissModeNerver)
-                                               duration:0
-                                         accessoryClick:nil];
-}
-
-+ (WyhBottomToastView *)showNerverDismissInfoMessage:(NSString *)msg accessoryClick:(void (^)(void))clickClosure {
++ (WyhBottomToastView *)show:(WyhUIToastType)type message:(NSString *)message {
     
-    return [[WyhUIToast service] showToastMessage:msg
-                                                   type:(WyhBottomToastViewTypeInformation)
-                                          accessoryType:(WyhBottomToastViewAccessoryTypeActionable)
-                                            dismissMode:(WyhBottomToastViewDismissModeNerver)
-                                               duration:0
-                                         accessoryClick:clickClosure];
+    return [WyhUIToast.service showToastMessage:message
+                                           type:(WyhBottomToastViewType)type
+                                  accessoryType:(WyhBottomToastViewAccessoryTypeNone)
+                                    dismissMode:(WyhBottomToastViewDismissModeDuration)
+                                       duration:kDefaultDismissDuration
+                                 accessoryClick:nil];
 }
 
-+ (WyhBottomToastView *)showNerverDismissWarningMessage:(NSString *)msg {
++ (WyhBottomToastView *)show:(WyhUIToastType)type
+                     message:(NSString *)message
+                    duration:(NSTimeInterval)duration {
     
-    return [[WyhUIToast service] showToastMessage:msg
-                                                   type:(WyhBottomToastViewTypeWarning)
-                                          accessoryType:(WyhBottomToastViewAccessoryTypeNone)
-                                            dismissMode:(WyhBottomToastViewDismissModeNerver)
-                                               duration:0
-                                         accessoryClick:nil];
-}
-
-+ (WyhBottomToastView *)showNerverDismissWarningMessage:(NSString *)msg accessoryClick:(void (^)(void))clickClosure {
-    
-    return [[WyhUIToast service] showToastMessage:msg
-                                                   type:(WyhBottomToastViewTypeWarning)
-                                          accessoryType:(WyhBottomToastViewAccessoryTypeActionable)
-                                            dismissMode:(WyhBottomToastViewDismissModeNerver)
-                                               duration:0
-                                         accessoryClick:clickClosure];
-}
-
-#pragma mark -
-
-+ (WyhBottomToastView *)showInfoMessage:(NSString *)msg {
-    
-    return [self showInfoMessage:msg duration:kDefaultDismissDuration];
+    return [WyhUIToast.service showToastMessage:message
+                                           type:(WyhBottomToastViewType)type
+                                  accessoryType:(WyhBottomToastViewAccessoryTypeNone)
+                                    dismissMode:(duration <= 0) ? WyhBottomToastViewDismissModeNerver : (WyhBottomToastViewDismissModeDuration)
+                                       duration:duration
+                                 accessoryClick:nil];
     
 }
 
-+ (WyhBottomToastView *)showWarningMessage:(NSString *)msg {
-
-   return [self showWarningMessage:msg duration:kDefaultDismissDuration];
-
++ (WyhBottomToastView *)show:(WyhUIToastType)type
+                     message:(NSString *)message
+                    duration:(NSTimeInterval)duration
+              accessoryClick:(void (^)(void))clickClosure {
+    
+    return [WyhUIToast.service showToastMessage:message
+                                           type:(WyhBottomToastViewType)type
+                                  accessoryType:(WyhBottomToastViewAccessoryTypeActionable)
+                                    dismissMode:(duration <= 0) ? WyhBottomToastViewDismissModeNerver : (WyhBottomToastViewDismissModeDuration)
+                                       duration:duration
+                                 accessoryClick:clickClosure];
 }
 
-+ (WyhBottomToastView *)showWarningMessage:(NSString *)msg duration:(NSTimeInterval)duration {
-    
-    return [[WyhUIToast service] showToastMessage:msg
-                                                   type:(WyhBottomToastViewTypeWarning)
-                                          accessoryType:(WyhBottomToastViewAccessoryTypeNone)
-                                            dismissMode:(WyhBottomToastViewDismissModeDuration)
-                                               duration:duration
-                                         accessoryClick:nil];
-}
-
-+ (WyhBottomToastView *)showInfoMessage:(NSString *)msg duration:(NSTimeInterval)duration {
-    
-    return [[WyhUIToast service] showToastMessage:msg
-                                                   type:(WyhBottomToastViewTypeInformation)
-                                          accessoryType:(WyhBottomToastViewAccessoryTypeNone)
-                                            dismissMode:(WyhBottomToastViewDismissModeDuration)
-                                               duration:duration
-                                         accessoryClick:nil];
-}
-
-+ (WyhBottomToastView *)showWarningMessage:(NSString *)msg
-                                 duration:(NSTimeInterval)duration
-                           accessoryClick:(void (^)(void))clickClosure {
-    
-    
-    
-    return [[WyhUIToast service] showToastMessage:msg
-                                                   type:(WyhBottomToastViewTypeWarning)
-                                          accessoryType:(WyhBottomToastViewAccessoryTypeActionable)
-                                            dismissMode:(WyhBottomToastViewDismissModeDuration)
-                                               duration:duration
-                                         accessoryClick:clickClosure];
-}
-
-+ (WyhBottomToastView *)showInfoMessage:(NSString *)msg
-                              duration:(NSTimeInterval)duration
-                        accessoryClick:(void (^)(void))clickClosure {
-    
-    return [[WyhUIToast service] showToastMessage:msg
-                                                   type:(WyhBottomToastViewTypeInformation)
-                                          accessoryType:(WyhBottomToastViewAccessoryTypeActionable)
-                                            dismissMode:(WyhBottomToastViewDismissModeDuration)
-                                               duration:duration
-                                         accessoryClick:clickClosure];
-}
 
 #pragma mark -
 
@@ -173,29 +108,15 @@
     }];
 }
 
-#pragma mark - Notification
-
--(void)textFieldViewDidBeginEditing:(NSNotification*)notification {
-    
-    _textFieldOrView = notification.object;
-    
-}
-
--(void)textFieldViewDidEndEditing:(NSNotification*)notification {
-    
-    _textFieldOrView = nil;
-}
-
 #pragma mark - Private
 
 - (WyhBottomToastView *)showToastMessage:(NSString *)msg
-                                   type:(WyhBottomToastViewType)type
-                          accessoryType:(WyhBottomToastViewAccessoryType)accessoryType
+                                    type:(WyhBottomToastViewType)type
+                           accessoryType:(WyhBottomToastViewAccessoryType)accessoryType
                              dismissMode:(WyhBottomToastViewDismissMode)dismissMode
-                               duration:(NSTimeInterval)duration
-                         accessoryClick:(void (^)(void))clickClosure {
-    
-    // first dismiss appeared toast .
+                                duration:(NSTimeInterval)duration
+                          accessoryClick:(void (^)(void))clickClosure {
+        
     __block BOOL isNeedShowDelay = NO;
     [self checkToastStacksAppeared:^(NSArray<WyhBottomToastView *> *appearedToast, NSArray<WyhBottomToastView *>*unappearedToast) {
         
@@ -206,16 +127,16 @@
     }];
     
     WyhBottomToastView *toast = [[WyhBottomToastView alloc]initWithMessage:msg
-                                                                    type:type
-                                                           accessoryType:accessoryType
-                                                             dismissMode:dismissMode
-                                                                duration:duration
-                                                                delegate:self];
+                                                 style:_defaultStyle
+                                                  type:type
+                                         accessoryType:accessoryType
+                                           dismissMode:dismissMode duration:duration delegate:self];
     if (!isNeedShowDelay) {
         [toast show];
     }
-   
     [_toastStacks addObject:toast];
+   
+    
     
     if (accessoryType != WyhBottomToastViewAccessoryTypeNone && clickClosure) {
         [_mapBlockTable setObject:clickClosure forKey:toast];
@@ -247,9 +168,10 @@
 #pragma mark - HSBottomToastViewDelegate
 
 - (void)bottomToastViewWillShow:(WyhBottomToastView *)alertView {
-    if (_textFieldOrView) {
-        [_textFieldOrView resignFirstResponder];
+    if ([IQKeyboardManager.sharedManager isKeyboardShowing]) {
+        [IQKeyboardManager.sharedManager resignFirstResponder];
     }
+    _currentAppearedToastView = alertView;
 }
 
 - (void)bottomToastViewDidDismiss:(WyhBottomToastView *)alertView {
@@ -268,7 +190,9 @@
 }
 
 - (void)bottomToastViewWillDismiss:(WyhBottomToastView *)alertView {
-    
+    if ([_currentAppearedToastView isEqual:alertView]) {
+        _currentAppearedToastView = nil;
+    }
 }
 
 - (void)bottomToastViewDidShow:(WyhBottomToastView *)alertView {

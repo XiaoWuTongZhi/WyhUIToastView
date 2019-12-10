@@ -3,7 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,11 +20,43 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UjE-UK-EIc">
-                                <rect key="frame" x="97" y="318" width="165" height="30"/>
+                                <rect key="frame" x="82" y="318" width="195" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Click to show toast view"/>
+                                <state key="normal" title="Click to show info toast view"/>
                                 <connections>
-                                    <action selector="clickAct:" destination="whP-gf-Uak" eventType="touchUpInside" id="sdC-bC-on0"/>
+                                    <action selector="clickShowInfo:" destination="whP-gf-Uak" eventType="touchUpInside" id="iB8-Hf-OXH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KlW-0u-Ubw">
+                                <rect key="frame" x="114" y="106" width="131" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Show loading toast"/>
+                                <connections>
+                                    <action selector="clickShowLoading:" destination="whP-gf-Uak" eventType="touchUpInside" id="dJf-dm-zzc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fFg-HR-iFp">
+                                <rect key="frame" x="43" y="168" width="272" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Show loading toast without interactioon"/>
+                                <connections>
+                                    <action selector="clickShowLoadingWithoutUserInteraction:" destination="whP-gf-Uak" eventType="touchUpInside" id="iex-CH-vsb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R5l-BG-9pQ">
+                                <rect key="frame" x="67" y="373" width="224" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Click to show warning toast view"/>
+                                <connections>
+                                    <action selector="clickShowWarning:" destination="whP-gf-Uak" eventType="touchUpInside" id="ZIP-JG-PNa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fX2-2V-VWI">
+                                <rect key="frame" x="67" y="424" width="225" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Click to show success toast view"/>
+                                <connections>
+                                    <action selector="clickShowSuccess:" destination="whP-gf-Uak" eventType="touchUpInside" id="E0J-NK-kg1"/>
                                 </connections>
                             </button>
                         </subviews>
